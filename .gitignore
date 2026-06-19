@@ -1,0 +1,13 @@
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+
+# Override global gitignore to include CLAUDE.md
+!CLAUDE.md
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
