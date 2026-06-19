@@ -44,14 +44,14 @@ class ClientActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnCheckBalance).setOnClickListener {
             if (isBound) {
                 updateBalanceDisplay()
-                tvStatus.text = "查詢成功 (from Client App)"
+                tvStatus.text = "Query successful (from Client App)"
             }
         }
 
         findViewById<Button>(R.id.btnPay).setOnClickListener {
             if (isBound) {
                 val success = paymentService!!.pay(100)
-                tvStatus.text = if (success) "付款 $100 成功 (from Client App)" else "餘額不足"
+                tvStatus.text = if (success) "Payment of $100 successful (from Client App)" else "Insufficient balance"
                 updateBalanceDisplay()
             }
         }
@@ -59,7 +59,7 @@ class ClientActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnTopUp).setOnClickListener {
             if (isBound) {
                 paymentService!!.topUp(500)
-                tvStatus.text = "儲值 $500 成功 (from Client App)"
+                tvStatus.text = "Top up $500 successful (from Client App)"
                 updateBalanceDisplay()
             }
         }
@@ -88,6 +88,6 @@ class ClientActivity : AppCompatActivity() {
     }
 
     private fun updateBalanceDisplay() {
-        tvBalance.text = "餘額：$${paymentService!!.getBalance()}"
+        tvBalance.text = "Balance: $${paymentService!!.getBalance()}"
     }
 }

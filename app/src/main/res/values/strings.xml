@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">mypayment</string>
-    <string name="balance_default">餘額：$1000</string>
-    <string name="btn_check_balance">查詢餘額</string>
-    <string name="btn_pay">付款 $100</string>
-    <string name="btn_top_up">儲值 $500</string>
+    <string name="balance_default">Balance: $1000</string>
+    <string name="btn_check_balance">Check Balance</string>
+    <string name="btn_pay">Pay $100</string>
+    <string name="btn_top_up">Top Up $500</string>
 </resources>
