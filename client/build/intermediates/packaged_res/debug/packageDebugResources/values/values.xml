@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Payment Client</string>
+    <string name="balance_default">尚未連線</string>
+    <string name="btn_check_balance">查詢餘額</string>
+    <string name="btn_pay">付款 $100</string>
+    <string name="btn_top_up">儲值 $500</string>
+    <string name="client_title">AIDL Client App</string>
+</resources>

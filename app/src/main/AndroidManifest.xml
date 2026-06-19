@@ -21,7 +21,13 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".PaymentService" />
+        <service
+            android:name=".PaymentService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.mypayment.IPaymentService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -2,36 +2,37 @@ package com.example.mypayment
 
 import android.app.Service
 import android.content.Intent
-import android.os.Binder
 import android.os.IBinder
 
 class PaymentService : Service() {
 
-    // Binder for the client to obtain the Service instance
-    inner class PaymentBinder : Binder() {
-        fun getService(): PaymentService = this@PaymentService
+    @Volatile
+    private var balance = 1000
+
+    // Implement the AIDL Stub — this is the server-side implementation.
+    // The Stub extends Binder and implements IPaymentService,
+    // handling IPC marshalling/unmarshalling automatically.
+    private val binder = object : IPaymentService.Stub() {
+        override fun getBalance(): Int = this@PaymentService.balance
+
+        override fun pay(amount: Int): Boolean {
+            val svc = this@PaymentService
+            if (amount <= 0 || amount > svc.balance) return false
+            svc.balance -= amount
+            return true
+        }
+
+        override fun topUp(amount: Int) {
+            if (amount > 0) {
+                this@PaymentService.balance += amount
+            }
+        }
     }
 
-    private val binder = PaymentBinder()
-    private var balance = 1000 // initial balance
-
-    // Called when a client calls bindService().
-    // The returned IBinder is delivered to the client via ServiceConnection.onServiceConnected().
+    // Return the Stub (which is an IBinder) to clients.
+    // For same-process calls, the Stub itself is returned.
+    // For cross-process calls, the system wraps it in a Proxy on the client side.
     override fun onBind(intent: Intent): IBinder {
         return binder
-    }
-
-    fun getBalance(): Int = balance
-
-    fun pay(amount: Int): Boolean {
-        if (amount <= 0 || amount > balance) return false
-        balance -= amount
-        return true
-    }
-
-    fun topUp(amount: Int) {
-        if (amount > 0) {
-            balance += amount
-        }
     }
 }
