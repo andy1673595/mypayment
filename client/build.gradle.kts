@@ -33,12 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        aidl = true
-    }
 }
 
 dependencies {
+    implementation(project(":aidl-api"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

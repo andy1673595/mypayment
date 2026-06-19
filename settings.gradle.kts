@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "mypayment"
 include(":app")
 include(":client")
+include(":aidl-api")
