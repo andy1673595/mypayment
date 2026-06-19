@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Android payment app (`com.example.mypayment`) built with Kotlin. Single-module project using Gradle Kotlin DSL with version catalog (`gradle/libs.versions.toml`).
+Android payment app built with Kotlin. Multi-module project using Gradle Kotlin DSL with version catalog (`gradle/libs.versions.toml`).
 
 - **minSdk**: 24, **targetSdk/compileSdk**: 36
 - **JVM target**: 11
@@ -35,10 +35,30 @@ Android payment app (`com.example.mypayment`) built with Kotlin. Single-module p
 
 ## Architecture
 
-Currently a fresh project scaffold with no Activities or application code yet. The manifest declares an `<application>` block but no components (activities, services, receivers).
+This project demonstrates Android IPC (inter-process communication) techniques using a payment service scenario.
 
-- Source: `app/src/main/java/com/example/mypayment/`
-- Resources: `app/src/main/res/`
-- Unit tests: `app/src/test/java/com/example/mypayment/`
-- Instrumented tests: `app/src/androidTest/java/com/example/mypayment/`
-- Dependency versions: `gradle/libs.versions.toml`
+### Modules
+
+- **`:app`** (Server App, `com.example.mypayment`) — Hosts `PaymentService` and `MainActivity`
+- **`:client`** (Client App, `com.example.mypayment.client`) — Separate app that binds to the server's service via AIDL
+
+### AIDL IPC
+
+- AIDL interface: `app/src/main/aidl/com/example/mypayment/IPaymentService.aidl`
+- Both modules must have an identical copy of the `.aidl` file with the same package
+- `PaymentService` implements `IPaymentService.Stub()` (server side)
+- `ClientActivity` uses `IPaymentService.Stub.asInterface()` to get a Proxy (client side)
+- `buildFeatures { aidl = true }` is required in both module's `build.gradle.kts`
+
+### Testing the cross-process flow
+
+1. Install both APKs: `:app` (server) and `:client`
+2. Launch the server app first, then the client app
+3. Operations in the client app (pay/topUp) affect the server's PaymentService state
+
+### Key files
+
+- `app/src/main/java/com/example/mypayment/PaymentService.kt` — AIDL Stub implementation
+- `app/src/main/java/com/example/mypayment/MainActivity.kt` — Server-side UI
+- `client/src/main/java/com/example/mypayment/client/ClientActivity.kt` — Cross-process client
+- `gradle/libs.versions.toml` — Dependency versions
