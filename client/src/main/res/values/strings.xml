@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">Payment Client</string>
-    <string name="client_title">AIDL Client App</string>
-    <string name="balance_default">Not connected</string>
-    <string name="btn_check_balance">Check Balance</string>
-    <string name="btn_pay">Pay $100</string>
-    <string name="btn_top_up">Top Up $500</string>
-</resources>
